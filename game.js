@@ -11,13 +11,32 @@
             user: 5,
             computer: 5,
         }
-        return function start() {
+        let number = 0;
+         return function start() {
             let msg = '';
+            let compChoose = 0;
             while( result.user > 0 && result.computer > 0) {
+                if(result.user > result.computer) {
+                    number = result.computer;
+                }
+                else
+                    number = result.user;
+                console.log("предел " + number);
                 if(flag === 0){ //угадывает компьютер
-                    const userChoose = +prompt(`Введите число от 1 до ${result.user}`)
-                    const compChoose = getRandomIntInclusive(0, 1);
-                    console.log(compChoose);
+                    let userChoose = prompt(`Введите число от 1 до ${number}`);
+                    console.log("Что выбрал пользователь " + userChoose);
+
+                    if(userChoose === null) {
+                        alert(`игра окончена \nКомпьютер: ${result.computer}\nИгрок: ${result.user}`);
+                        return;
+                    }
+                    if(userChoose > number || userChoose < 1) {
+                        alert("неверное число");
+                        start();
+                    }
+                    compChoose = getRandomIntInclusive(0, 1);
+                    console.log("Что выбрал комп " + compChoose);
+                    userChoose = parseInt(userChoose);
                     if(userChoose % 2 === compChoose) {
                         result.computer += userChoose;
                         result.user -= userChoose;
@@ -29,66 +48,42 @@
                         alert('Вы выиграли');
                     }
                     flag ++;
-
-                    // if(userChoose % 2 === compChoose) {}
                 }
                 else { // угадывает человек
-                    const userChoose = +prompt(`Введите число от 0 (четное) до 1(нечетное)`)
-                    const compChoose = getRandomIntInclusive(1, result.computer);
-                    console.log(compChoose);
-                    if(compChoose % 2 === userChoose) {
-                        result.computer -= compChoose;
-                        result.user += compChoose;
-                        alert('Вы выиграли');
+                    let userChoose1 = prompt(`Введите число от 0 (четное) до 1(нечетное)`)
+                    console.log("Что выбрал пользователь " + userChoose1);
+                    if(userChoose1 === null) {
+                        alert(`игра окончена \nкомпьютер: ${result.computer}\nИгрок: ${number}`);
+                        return;
+                    }
+                    if(userChoose1 < 0 || userChoose1 > 1) {
+                        alert("неверное число");
+                        start();
+                    }
+                    if(result.user === 1 ) {
+                        compChoose = 1;
                     }
                     else {
-                        result.computer += compChoose;
-                        result.user -= compChoose;
-                        alert('Вы проиграли');
+                        compChoose = getRandomIntInclusive(1, number);
                     }
+                        console.log("Что выбрал комп " + compChoose % 2);
+
+                        if(compChoose % 2 === userChoose1) {
+                            result.computer -= compChoose;
+                            result.user += compChoose;
+                            alert('Вы выиграли');
+                        }
+                        else {
+                            result.computer += compChoose;
+                            result.user -= compChoose;
+                            alert('Вы проиграли');
+                        }
                     flag --;
                 }
-                alert(`компьютер: ${result.computer}\nИгрок:${result.user}`);
+               alert(`компьютер: ${result.computer}\nИгрок: ${result.user}`);
             }
-            alert(`игра окончена \nкомпьютер: ${result.computer}\nИгрок:${result.user}`);
-
-        //     const compChoose = figuries.ru[getRandomIntInclusive(0, figuries.ru.length - 1)].slice(0,1);
-        //     console.log(compChoose);
-        //     let userChoose = prompt('Камень, ножницы, бумага ?');
-        //     if(userChoose === null)
-        //         if(confirm("Вы хотите закончить?"))
-        //         {
-        //             alert('Игра окончена');
-        //             return;
-        //         }
-        //         else start();
-        //     else {
-        //         userChoose = userChoose.toLowerCase().slice(0,1);
-        //         if(userChoose !== figuries.ru[0].slice(0,1) && userChoose !== figuries.ru[1].slice(0,1) && userChoose !== figuries.ru[2].slice(0,1)) {
-        //             start();
-        //         }
-        //         if(compChoose === userChoose) {
-        //             msg = "Ничья";
-        //         }
-        //         else {
-        //             if((userChoose === figuries.ru[0].slice(0,1) && compChoose === figuries.ru[1].slice(0,1)) ||
-        //                 (userChoose === figuries.ru[1].slice(0,1) && compChoose === figuries.ru[2].slice(0,1))||
-        //                 (userChoose === figuries.ru[2].slice(0,1) && compChoose === figuries.ru[0].slice(0,1)))
-        //             {
-        //                 msg = "Вы выиграли";
-        //                 result.user += 1;
-        //             }
-        //
-        //             else
-        //             {
-        //                 msg = "Выиграл компьютер";
-        //                 result.computer += 1;
-        //             }
-        //         }
-        //
-        //         alert(`Компьютер: ${result.computer} \nИгрок: ${result.user} \n${msg}`)
-        //         start();
-        //     }
+           alert(`игра окончена \nкомпьютер: ${result.computer}\nИгрок: ${result.user}`);
+            return;
          }
     };
     window.RPS = game;
